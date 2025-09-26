@@ -1,0 +1,33 @@
+{
+  "name": "@repo/tokens",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Design tokens for the monorepo",
+  "main": "dist/tokens.js",
+  "types": "dist/tokens.d.ts",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build-watch.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "style-dictionary": "^5.0.4"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.js",
+      "types": "./dist/tokens.d.ts"
+    },
+    "./css": "./dist/tokens.css",
+    "./json": "./dist/tokens.json"
+  },
+  "files": [
+    "dist"
+  ]
+}

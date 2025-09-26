@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      //   "@design-system/*": ["packages/design-system/src/*"],
+      //   "@repo/tokens": ["packages/tokens/dist/index.d.ts"]
+    }
+  }
+}

@@ -8,6 +8,10 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.17.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "devDependencies": {
     "turbo": "^2.5.8",
     "typescript": "^5.9.2"
@@ -17,5 +21,8 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test"
+  },
+  "dependencies": {
+    "react-native-web": "~0.21.1"
   }
 }
