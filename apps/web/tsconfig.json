@@ -20,7 +20,9 @@
     ],
     "baseUrl": ".", // Can override if needed
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@repo/tokens": ["../../packages/tokens"],
+      "@repo/design-system": ["../../packages/design-system"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

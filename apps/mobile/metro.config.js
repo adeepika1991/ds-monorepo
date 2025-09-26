@@ -1,19 +1,18 @@
-// apps/mobile/metro.config.js
-const { getDefaultConfig } = require("expo/metro-config");
 const path = require("path");
+const { getDefaultConfig } = require("expo/metro-config");
 
-// Get the monorepo root directory (two levels up from apps/mobile)
-const monorepoRoot = path.resolve(__dirname, "..", "..");
+const root = path.resolve(__dirname, "../..");
 
 const config = getDefaultConfig(__dirname);
 
-// Watch the entire monorepo for changes
-config.watchFolders = [monorepoRoot];
+config.watchFolders = [root, path.resolve(root, "packages")];
 
-// Optional: Add module resolution for monorepo packages
 config.resolver.extraNodeModules = {
-  // Help Metro resolve imports like '@my-org/design-system'
-  "@my-org/design-system": path.resolve(monorepoRoot, "packages/design-system"),
+  react: path.resolve(root, "node_modules/react"),
+  "react-dom": path.resolve(root, "node_modules/react-dom"),
+  "react-native": path.resolve(root, "node_modules/react-native"),
 };
+
+config.resolver.unstable_enableSymlinks = true;
 
 module.exports = config;
