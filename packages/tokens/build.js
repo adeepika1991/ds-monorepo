@@ -3,6 +3,94 @@ import StyleDictionary from "style-dictionary";
 const brands = ["acme", "globex"];
 const themes = ["light", "dark"];
 
+// Register custom format for nested JavaScript structure
+StyleDictionary.registerFormat({
+  name: "javascript/nested",
+  format: function ({ dictionary }) {
+    // Create a clean nested structure without all the metadata
+    const cleanTokens = {};
+
+    // Transform the dictionary to remove all the Style Dictionary metadata
+    function transformTokens(tokenObj) {
+      if (tokenObj && typeof tokenObj === "object") {
+        // If it has a value property, return just the value
+        if (tokenObj.value !== undefined) {
+          return tokenObj.value;
+        }
+
+        // If it's a nested object, recursively transform
+        const result = {};
+        for (const key in tokenObj) {
+          // Skip metadata properties
+          if (
+            [
+              "filePath",
+              "isSource",
+              "original",
+              "name",
+              "attributes",
+              "path",
+              "key",
+            ].includes(key)
+          ) {
+            continue;
+          }
+          result[key] = transformTokens(tokenObj[key]);
+        }
+        return result;
+      }
+      return tokenObj;
+    }
+
+    const nestedTokens = transformTokens(dictionary.tokens);
+
+    // Return as ES6 module export
+    return `export default ${JSON.stringify(nestedTokens, null, 2)};`;
+  },
+});
+
+// Register CommonJS version
+StyleDictionary.registerFormat({
+  name: "javascript/nested-common",
+  format: function ({ dictionary }) {
+    // Create a clean nested structure without all the metadata
+    const cleanTokens = {};
+
+    function transformTokens(tokenObj) {
+      if (tokenObj && typeof tokenObj === "object") {
+        if (tokenObj.value !== undefined) {
+          return tokenObj.value;
+        }
+
+        const result = {};
+        for (const key in tokenObj) {
+          if (
+            [
+              "filePath",
+              "isSource",
+              "original",
+              "name",
+              "attributes",
+              "path",
+              "key",
+            ].includes(key)
+          ) {
+            continue;
+          }
+          result[key] = transformTokens(tokenObj[key]);
+        }
+        return result;
+      }
+      return tokenObj;
+    }
+
+    const nestedTokens = transformTokens(dictionary.tokens);
+
+    // Return as CommonJS module export
+    return `module.exports = ${JSON.stringify(nestedTokens, null, 2)};`;
+  },
+});
+
 // Define platforms for different consumers
 function getPlatforms(brand, theme) {
   return {
@@ -19,26 +107,22 @@ function getPlatforms(brand, theme) {
       ],
     },
 
-    // For JavaScript/TypeScript consumption - FIXED FORMATS
+    // For JavaScript/TypeScript consumption - USING CUSTOM NESTED FORMAT
     js: {
-      transformGroup: "js",
+      transforms: ["attribute/cti", "name/pascal", "size/px", "color/hex"],
       buildPath: `dist/${brand}-${theme}/`,
       files: [
         {
           destination: "tokens.js",
-          format: "javascript/es6", // Named exports for .js
-          options: { outputReferences: true },
+          format: "javascript/nested-common", // Custom CommonJS format
         },
         {
           destination: "tokens.cjs",
-          format: "javascript/module", // module.exports for CommonJS
+          format: "javascript/nested-common", // Custom CommonJS format
         },
         {
           destination: "tokens.mjs",
-          format: "javascript/es6", // Named exports for ESM
-          options: {
-            outputReferences: true,
-          },
+          format: "javascript/nested", // Custom ES6 format
         },
       ],
     },
@@ -74,7 +158,7 @@ function getPlatforms(brand, theme) {
       files: [
         {
           destination: "tokens.rn.js",
-          format: "javascript/es6", // Use es6 for React Native too
+          format: "javascript/es6",
           options: {
             outputReferences: true,
           },

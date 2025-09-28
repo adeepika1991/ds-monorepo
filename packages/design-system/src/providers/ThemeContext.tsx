@@ -46,10 +46,23 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Simple token getter
+// Simple token getter - no transformation needed!
+// In your ThemeContext, add this debug:
 const getTokens = (brand: Brand, theme: Theme): DesignTokens => {
   const themeKey = `${brand}${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
-  return (themes as any)[themeKey] || {};
+
+  console.log("=== TOKEN DEBUG ===");
+  console.log("Theme key:", themeKey);
+  console.log("Available themes:", Object.keys(themes));
+  console.log("Themes object:", themes);
+
+  const themeTokens = (themes as any)[themeKey] || {};
+
+  console.log("Found tokens:", themeTokens);
+  console.log("Token keys:", Object.keys(themeTokens));
+  console.log("=== END DEBUG ===");
+
+  return themeTokens;
 };
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -60,7 +73,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   const [tokens, setTokens] = useState<DesignTokens>(getTokens(brand, theme));
 
   useEffect(() => {
-    setTokens(getTokens(brand, theme));
+    console.log(`🔄 Theme/Brand changed to: ${brand}-${theme}`);
+    const newTokens = getTokens(brand, theme);
+    setTokens(newTokens);
   }, [theme, brand]);
 
   const value: ThemeContextType = {

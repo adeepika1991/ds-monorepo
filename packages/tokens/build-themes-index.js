@@ -1,3 +1,4 @@
+// packages/tokens/build-themes-index.js
 import { writeFileSync, mkdirSync, existsSync, readdirSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -37,7 +38,7 @@ function generateThemesIndex() {
     let cjsContent = "// Auto-generated themes index - CommonJS version\n";
 
     // Generate TypeScript declarations
-    let tsContent = `// Auto-generated TypeScript declarations\nexport interface ThemeTokens { [key: string]: string | number }\n\n`;
+    let tsContent = `// Auto-generated TypeScript declarations\nexport interface ThemeTokens { \n  color?: {\n    primary?: string;\n    secondary?: string;\n    background?: string;\n    text?: string;\n  };\n  size?: {\n    font?: {\n      sm?: string;\n      md?: string;\n      lg?: string;\n    };\n    spacing?: {\n      sm?: string;\n      md?: string;\n      lg?: string;\n    };\n  };\n  button?: {\n    padding?: string;\n    fontSize?: string;\n    borderRadius?: string;\n    primary?: {\n      background?: string;\n      text?: string;\n    };\n  };\n  [key: string]: any;\n}\n\n`;
 
     themeDirs.forEach((themeDir) => {
       const [brand, theme] = themeDir.split("-");
@@ -62,12 +63,12 @@ function generateThemesIndex() {
         return;
       }
 
-      // ESM exports - UPDATED FOR NAMED EXPORTS
-      esmContent += `import * as ${importName} from '${themePath}/tokens.mjs';\n`;
-      esmContent += `import * as ${importName}ReactNative from '${themePath}/tokens.rn.js';\n`;
+      // ESM exports - FIXED: Use named imports for React Native, default for others
+      esmContent += `import ${importName} from '${themePath}/tokens.mjs';\n`;
+      esmContent += `import * as ${importName}ReactNative from '${themePath}/tokens.rn.js';\n`; // Changed to named import
       esmContent += `export { ${importName}, ${importName}ReactNative };\n\n`;
 
-      // CJS exports - UPDATED FOR NAMED EXPORTS
+      // CJS exports - FIXED: React Native uses named exports
       cjsContent += `const ${importName} = require('${themePath}/tokens.cjs');\n`;
       cjsContent += `const ${importName}ReactNative = require('${themePath}/tokens.rn.js');\n`;
       cjsContent += `exports.${importName} = ${importName};\n`;
@@ -75,7 +76,7 @@ function generateThemesIndex() {
 
       // TypeScript exports
       tsContent += `export declare const ${importName}: ThemeTokens;\n`;
-      tsContent += `export declare const ${importName}ReactNative: ThemeTokens;\n`;
+      tsContent += `export declare const ${importName}ReactNative: any;\n`; // React Native has flat structure
     });
 
     // Write files
