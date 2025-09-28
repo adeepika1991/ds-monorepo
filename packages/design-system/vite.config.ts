@@ -1,68 +1,54 @@
-// /// <reference types="vitest/config" />
-// import { defineConfig } from "vite";
-// import react from "@vitejs/plugin-react-swc";
-// import tailwindcss from "@tailwindcss/vite";
-
-// // https://vite.dev/config/
-// import path from 'node:path';
-// import { fileURLToPath } from 'node:url';
-// import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-// const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
-
-// // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
-// export default defineConfig({
-//   plugins: [react(), tailwindcss()],
-//   test: {
-//     projects: [{
-//       extends: true,
-//       plugins: [
-//       // The plugin will run tests for the stories defined in your Storybook config
-//       // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
-//       storybookTest({
-//         configDir: path.join(dirname, '.storybook')
-//       })],
-//       test: {
-//         name: 'storybook',
-//         browser: {
-//           enabled: true,
-//           headless: true,
-//           provider: 'playwright',
-//           instances: [{
-//             browser: 'chromium'
-//           }]
-//         },
-//         setupFiles: ['.storybook/vitest.setup.ts']
-//       }
-//     }]
-//   }
-// });
-
+// packages/design-system/vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    dts({
+      include: ["src"],
+      exclude: [
+        "**/*.stories.tsx",
+        "**/*.test.tsx",
+        ".storybook/**",
+        "**/*.native.tsx",
+      ],
+      outDir: "dist",
+      insertTypesEntry: true,
+    }),
+  ],
 
-  // ✅ ADD LIBRARY BUILD CONFIGURATION
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"), // Your library entry point
+      entry: resolve(__dirname, "src/index.ts"),
       name: "DesignSystem",
       fileName: (format) => `index.${format}.js`,
+      formats: ["es"], // Only build ES modules for better compatibility
     },
     rollupOptions: {
-      external: ["react", "react-dom"], // Mark React as external
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
+        // Use proper chunking and avoid dynamic requires
+        exports: "named",
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+          "react/jsx-runtime": "jsxRuntime",
         },
       },
     },
+    outDir: "dist",
+    // Add these for better optimization
+    minify: false, // Disable minification to debug better
+    sourcemap: true,
   },
 
-  // ✅ TEMPORARILY disable test config (comment out entirely)
-  // test: { ... }
+  // Ensure proper resolution
+  resolve: {
+    dedupe: ["react", "react-dom"],
+  },
 });

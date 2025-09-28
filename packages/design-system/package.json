@@ -8,9 +8,26 @@
     "README.md",
     "LICENSE"
   ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    },
+    "./native": {
+      "types": "./dist/native.d.ts",
+      "import": "./dist/native.es.js",
+      "require": "./dist/native.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
+    "clean": "rm -rf dist",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -59,6 +76,7 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.44.0",
     "vite": "npm:rolldown-vite@7.1.12",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

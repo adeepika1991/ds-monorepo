@@ -1,57 +1,85 @@
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import * as tokenExports from "@repo/tokens/acme-light";
+// packages/design-system/src/providers/ThemeContext.tsx
+import React, { createContext, useContext, useState, useEffect } from "react";
+import * as themes from "@repo/tokens";
 
-// Supported brands and themes
-type Brand = "acme" | "globex";
 type Theme = "light" | "dark";
+type Brand = "acme" | "globex";
 
-interface ThemeContextValue {
-  tokens: Record<string, any>; // flattened token object
-  brand: Brand;
-  theme: Theme;
-}
-
-const ThemeContext = createContext<ThemeContextValue>({
-  tokens: tokenExports, // fallback
-  brand: "acme",
-  theme: "light",
-});
-
-// Props for ThemeProvider
-interface ThemeProviderProps {
-  brand: Brand;
-  theme: Theme;
-  children: ReactNode;
-}
-
-export const ThemeProvider = ({
-  brand,
-  theme,
-  children,
-}: ThemeProviderProps) => {
-  // Merge tokens dynamically based on brand + theme
-  const mergedTokens = useMemo(() => {
-    return {
-      ...tokenExports, // base tokens
-      ...(tokenExports as any)[`${brand}-${theme}`], // brand-theme specific tokens
+export interface DesignTokens {
+  color?: {
+    primary?: string;
+    secondary?: string;
+    background?: string;
+    text?: string;
+  };
+  size?: {
+    font?: {
+      sm?: string;
+      md?: string;
+      lg?: string;
     };
-  }, [brand, theme]);
+    spacing?: {
+      sm?: string;
+      md?: string;
+      lg?: string;
+    };
+  };
+  button?: {
+    padding?: string;
+    fontSize?: string;
+    borderRadius?: string;
+    primary?: {
+      background?: string;
+      text?: string;
+    };
+  };
+  [key: string]: any;
+}
 
-  // Optional: inject CSS variables for easy styling
-  React.useEffect(() => {
-    Object.entries(mergedTokens).forEach(([key, value]) => {
-      if (typeof value === "string") {
-        document.documentElement.style.setProperty(`--${key}`, value);
-      }
-    });
-  }, [mergedTokens]);
+interface ThemeContextType {
+  theme: Theme;
+  brand: Brand;
+  setTheme: (theme: Theme) => void;
+  setBrand: (brand: Brand) => void;
+  tokens: DesignTokens;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// Simple token getter
+const getTokens = (brand: Brand, theme: Theme): DesignTokens => {
+  const themeKey = `${brand}${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
+  return (themes as any)[themeKey] || {};
+};
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [theme, setTheme] = useState<Theme>("light");
+  const [brand, setBrand] = useState<Brand>("acme");
+  const [tokens, setTokens] = useState<DesignTokens>(getTokens(brand, theme));
+
+  useEffect(() => {
+    setTokens(getTokens(brand, theme));
+  }, [theme, brand]);
+
+  const value: ThemeContextType = {
+    theme,
+    brand,
+    setTheme,
+    setBrand,
+    tokens,
+  };
 
   return (
-    <ThemeContext.Provider value={{ tokens: mergedTokens, brand, theme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 
-// Hook to consume theme tokens
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};

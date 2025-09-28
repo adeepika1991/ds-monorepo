@@ -11,18 +11,23 @@
     "declarationMap": true,
     "outDir": "dist",
     "rootDir": "src",
-    "noEmit": false,
+    "noEmit": true, // Change to true since Vite will handle emitting
 
     "strict": true,
     "skipLibCheck": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": [
     "dist",
     "node_modules",
     ".storybook",
+    "**/*.stories.tsx",
     "**/*.test.tsx",
     "vite.config.ts"
   ]
