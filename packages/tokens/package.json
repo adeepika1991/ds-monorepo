@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Design tokens for the monorepo",
-  "main": "dist/tokens.js",
-  "types": "dist/tokens.d.ts",
+  "main": "./dist/themes-index.cjs",
+  "module": "./dist/themes-index.mjs",
+  "types": "./dist/themes-index.d.ts",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.js && node build-themes-index.js",
+    "build:themes": "node build-themes-index.js",
     "dev": "node build-watch.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "design-tokens",
+    "tokens"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.17.1",
@@ -20,12 +26,39 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/tokens.js",
-      "require": "./dist/tokens.js",
-      "types": "./dist/tokens.d.ts"
+      "import": "./dist/themes-index.mjs",
+      "require": "./dist/themes-index.cjs",
+      "types": "./dist/themes-index.d.ts"
     },
-    "./css": "./dist/tokens.css",
-    "./json": "./dist/tokens.json"
+    "./acme-light": {
+      "import": "./dist/acme-light/tokens.mjs",
+      "require": "./dist/acme-light/tokens.cjs",
+      "types": "./dist/acme-light/tokens.d.ts",
+      "style": "./dist/acme-light/tokens.css"
+    },
+    "./acme-dark": {
+      "import": "./dist/acme-dark/tokens.mjs",
+      "require": "./dist/acme-dark/tokens.cjs",
+      "types": "./dist/acme-dark/tokens.d.ts",
+      "style": "./dist/acme-dark/tokens.css"
+    },
+    "./globex-light": {
+      "import": "./dist/globex-light/tokens.mjs",
+      "require": "./dist/globex-light/tokens.cjs",
+      "types": "./dist/globex-light/tokens.d.ts",
+      "style": "./dist/globex-light/tokens.css"
+    },
+    "./globex-dark": {
+      "import": "./dist/globex-dark/tokens.mjs",
+      "require": "./dist/globex-dark/tokens.cjs",
+      "types": "./dist/globex-dark/tokens.d.ts",
+      "style": "./dist/globex-dark/tokens.css"
+    },
+    "./themes": {
+      "import": "./dist/themes-index.mjs",
+      "require": "./dist/themes-index.cjs",
+      "types": "./dist/themes-index.d.ts"
+    }
   },
   "files": [
     "dist"
