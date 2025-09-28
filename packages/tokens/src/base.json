@@ -1,0 +1,20 @@
+{
+  "color": {
+    "primary": { "value": "#3366FF" },
+    "secondary": { "value": "#FFAA00" },
+    "background": { "value": "#FFFFFF" },
+    "text": { "value": "#000000" }
+  },
+  "size": {
+    "font": {
+      "sm": { "value": "12px" },
+      "md": { "value": "16px" },
+      "lg": { "value": "20px" }
+    },
+    "spacing": {
+      "sm": { "value": "4px" },
+      "md": { "value": "8px" },
+      "lg": { "value": "16px" }
+    }
+  }
+}

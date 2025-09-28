@@ -1,0 +1,11 @@
+{
+  "button": {
+    "padding": { "value": "{size.spacing.md}" },
+    "fontSize": { "value": "{size.font.md}" },
+    "borderRadius": { "value": "4px" },
+    "primary": {
+      "background": { "value": "{color.primary}" },
+      "text": { "value": "{color.text}" }
+    }
+  }
+}
