@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm install --prefix apps/web",
-  "buildCommand": "npm run build --prefix apps/web",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm turbo run build --filter=web...",
   "outputDirectory": "apps/web/.next"
 }
