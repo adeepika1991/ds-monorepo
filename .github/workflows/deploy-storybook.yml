@@ -44,4 +44,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: packages/design-system/storybook-static
           user_name: "github-actions[bot]"
+          destination_dir: storybook
           user_email: "github-actions[bot]@users.noreply.github.com"
