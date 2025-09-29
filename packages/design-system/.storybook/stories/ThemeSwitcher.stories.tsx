@@ -435,7 +435,7 @@ const ThemeDemoWithInitialState = ({
 };
 
 const meta: Meta = {
-  title: "🎨 Theming/Theme Switcher",
+  title: "Theming/Theme Switcher",
   component: ThemeDemo,
   decorators: [
     (Story) => (

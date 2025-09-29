@@ -390,7 +390,7 @@ const WelcomePage = () => {
 };
 
 const meta: Meta = {
-  title: "🚀 Welcome/Getting Started",
+  title: "Welcome/Getting Started",
   parameters: {
     layout: "fullscreen",
   },

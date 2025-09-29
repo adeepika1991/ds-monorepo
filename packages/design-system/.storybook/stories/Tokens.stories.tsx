@@ -106,7 +106,7 @@ const TokensDisplay = () => {
 };
 
 const meta: Meta = {
-  title: "🎨 Design Tokens/Token Display",
+  title: "Design Tokens/Token Display",
   component: TokensDisplay,
 };
 
