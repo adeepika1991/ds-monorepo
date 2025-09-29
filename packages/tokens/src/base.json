@@ -1,37 +1,37 @@
 {
   "color": {
-    "primary": { "value": "#0066FF" },
-    "primary-hover": { "value": "#0052CC" },
-    "primary-active": { "value": "#003D99" },
-    "secondary": { "value": "#C2410C" },
-    "secondary-hover": { "value": "#E55A2B" },
-    "secondary-active": { "value": "#CC4921" },
-    "accent": { "value": "#00D4AA" },
-    "accent-hover": { "value": "#00B38F" },
-    "accent-active": { "value": "#009275" },
+    "primary": { "value": "#0052CC" },
+    "primary-hover": { "value": "#0041A8" },
+    "primary-active": { "value": "#003185" },
+    "secondary": { "value": "#B43403" },
+    "secondary-hover": { "value": "#993002" },
+    "secondary-active": { "value": "#7A2402" },
+    "accent": { "value": "#008C72" },
+    "accent-hover": { "value": "#006F5A" },
+    "accent-active": { "value": "#005244" },
     "background": { "value": "#FFFFFF" },
     "surface": { "value": "#F8FAFC" },
     "surface-elevated": { "value": "#FFFFFF" },
     "text": { "value": "#1A1F36" },
-    "text-muted": { "value": "#6B7280" },
+    "text-muted": { "value": "#4B5563" },
     "text-inverse": { "value": "#FFFFFF" },
-    "border": { "value": "#E5E7EB" },
-    "border-hover": { "value": "#D1D5DB" },
-    "border-focused": { "value": "#0066FF" },
-    "success": { "value": "#10B981" },
-    "warning": { "value": "#F59E0B" },
-    "error": { "value": "#EF4444" },
-    "info": { "value": "#3B82F6" }
+    "border": { "value": "#D1D5DB" },
+    "border-hover": { "value": "#9CA3AF" },
+    "border-focused": { "value": "#0052CC" },
+    "success": { "value": "#047857" },
+    "warning": { "value": "#B45309" },
+    "error": { "value": "#B91C1C" },
+    "info": { "value": "#1D4ED8" }
   },
   "gradient": {
     "primary": {
       "value": "linear-gradient(135deg, {color.primary} 0%, {color.accent} 100%)"
     },
     "secondary": {
-      "value": "linear-gradient(135deg, {color.secondary} 0%, #FF8C42 100%)"
+      "value": "linear-gradient(135deg, {color.secondary} 0%, #CC5500 100%)"
     },
     "accent": {
-      "value": "linear-gradient(135deg, {color.accent} 0%, #00F2FE 100%)"
+      "value": "linear-gradient(135deg, {color.accent} 0%, #0099AA 100%)"
     },
     "surface": {
       "value": "linear-gradient(135deg, {color.surface} 0%, #FFFFFF 100%)"
@@ -128,8 +128,8 @@
     },
     "2xl": { "value": "0 25px 50px -12px rgba(0, 0, 0, 0.25)" },
     "inner": { "value": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)" },
-    "glow-primary": { "value": "0 0 20px rgba(0, 102, 255, 0.3)" },
-    "glow-accent": { "value": "0 0 20px rgba(0, 212, 170, 0.3)" }
+    "glow-primary": { "value": "0 0 20px rgba(0, 82, 204, 0.3)" },
+    "glow-accent": { "value": "0 0 20px rgba(0, 140, 114, 0.3)" }
   },
 
   "animation": {

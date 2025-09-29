@@ -1,5 +1,5 @@
 // packages/design-system/src/components/Input/Input.tsx
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import { useTheme } from "../../providers";
 import { clsx } from "clsx";
 
@@ -22,10 +22,15 @@ export const Input: React.FC<InputProps> = ({
   onFocus,
   onBlur,
   style,
+  id, // Destructure id from props
   ...props
 }) => {
   const { tokens } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
+
+  // Generate a unique ID if none is provided
+  const generatedId = useId();
+  const inputId = id || generatedId;
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(true);
@@ -175,6 +180,7 @@ export const Input: React.FC<InputProps> = ({
         getToken("size.border-radius.md", "0.5rem")
       ),
       border,
+      boxSizing: "border-box",
       boxShadow,
       backgroundColor: background,
       color,
@@ -238,6 +244,14 @@ export const Input: React.FC<InputProps> = ({
     fontFamily: getToken("font.family.sans", "'Inter', sans-serif"),
   };
 
+  // Generate proper aria-describedby value
+  const getAriaDescribedBy = () => {
+    const descriptors = [];
+    if (error) descriptors.push(`${inputId}-error`);
+    if (helperText) descriptors.push(`${inputId}-helper`);
+    return descriptors.length > 0 ? descriptors.join(" ") : undefined;
+  };
+
   return (
     <div
       className="ds-input-wrapper"
@@ -245,7 +259,7 @@ export const Input: React.FC<InputProps> = ({
     >
       {label && (
         <label
-          htmlFor={props.id} // Ensure label is associated with input
+          htmlFor={inputId} // Use the consistent inputId
           className="ds-input-label"
           style={labelStyles}
         >
@@ -260,7 +274,7 @@ export const Input: React.FC<InputProps> = ({
       )}
 
       <input
-        id={props.id} // Ensure ID exists for label association
+        id={inputId} // Use the consistent inputId
         className={clsx(
           "ds-input",
           `ds-input--${variant}`,
@@ -274,11 +288,7 @@ export const Input: React.FC<InputProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         aria-invalid={error ? "true" : "false"}
-        aria-describedby={
-          [error && `${props.id}-error`, helperText && `${props.id}-helper`]
-            .filter(Boolean)
-            .join(" ") || undefined
-        }
+        aria-describedby={getAriaDescribedBy()}
         aria-required={props.required}
         disabled={props.disabled}
         {...props}
@@ -286,7 +296,7 @@ export const Input: React.FC<InputProps> = ({
 
       {(error || helperText) && (
         <span
-          id={error ? `${props.id}-error` : `${props.id}-helper`}
+          id={error ? `${inputId}-error` : `${inputId}-helper`} // Use consistent inputId
           className={clsx(
             "ds-helper-text",
             error && "ds-helper-text--error",
