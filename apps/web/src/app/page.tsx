@@ -363,14 +363,18 @@ const ComponentGallery = () => {
               label="Default Input"
               placeholder="Enter your text here..."
               value={formData.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
+              onChange={(e: { target: { value: string } }) =>
+                handleInputChange("name", e.target.value)
+              }
             />
             <Input
               variant="filled"
               label="Filled Variant"
               placeholder="With filled background"
               value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
+              onChange={(e: { target: { value: string } }) =>
+                handleInputChange("email", e.target.value)
+              }
             />
             <Input
               variant="outline"
@@ -565,7 +569,9 @@ const ComponentGallery = () => {
             <Input
               label="Your Name"
               value={formData.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
+              onChange={(e: { target: { value: string } }) =>
+                handleInputChange("name", e.target.value)
+              }
               placeholder="Enter your name"
               required
             />
@@ -573,14 +579,18 @@ const ComponentGallery = () => {
               label="Email Address"
               type="email"
               value={formData.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
+              onChange={(e: { target: { value: string } }) =>
+                handleInputChange("email", e.target.value)
+              }
               placeholder="your@email.com"
               required
             />
             <Input
               label="Message"
               value={formData.message}
-              onChange={(e) => handleInputChange("message", e.target.value)}
+              onChange={(e: { target: { value: string } }) =>
+                handleInputChange("message", e.target.value)
+              }
               placeholder="Tell us what you think..."
               required
             />
