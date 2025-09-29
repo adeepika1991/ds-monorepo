@@ -363,6 +363,7 @@ const WelcomePage = () => {
             <a
               href="https://github.com/adeepika1991/ds-monorepo"
               target="_blank"
+              style={{ textDecoration: "none", color: "inherit" }}
             >
               ⚡ GitHub
             </a>
