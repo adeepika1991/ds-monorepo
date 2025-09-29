@@ -1,6 +1,10 @@
 {
   "color": {
     "background": { "value": "#FFFFFF" },
-    "text": { "value": "#000000" }
+    "surface": { "value": "#F8FAFC" },
+    "text": { "value": "#1E293B" },
+    "text-muted": { "value": "#64748B" },
+    "border": { "value": "#E2E8F0" },
+    "border-hover": { "value": "#CBD5E1" }
   }
 }

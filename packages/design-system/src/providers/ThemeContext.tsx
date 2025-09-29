@@ -8,30 +8,143 @@ type Brand = "acme" | "globex";
 export interface DesignTokens {
   color?: {
     primary?: string;
+    "primary-hover"?: string;
+    "primary-active"?: string;
     secondary?: string;
+    "secondary-hover"?: string;
+    "secondary-active"?: string;
     background?: string;
+    surface?: string;
     text?: string;
+    "text-muted"?: string;
+    border?: string;
+    "border-hover"?: string;
+    error?: string;
+    warning?: string;
+    success?: string;
   };
   size?: {
     font?: {
+      xs?: string;
       sm?: string;
       md?: string;
       lg?: string;
+      xl?: string;
     };
     spacing?: {
+      xs?: string;
       sm?: string;
       md?: string;
       lg?: string;
+      xl?: string;
+      "2xl"?: string;
+    };
+    "border-radius"?: {
+      sm?: string;
+      md?: string;
+      lg?: string;
+      xl?: string;
+      full?: string;
     };
   };
+  shadow?: {
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+  };
+  animation?: {
+    duration?: {
+      fast?: string;
+      normal?: string;
+      slow?: string;
+    };
+    easing?: {
+      default?: string;
+      bounce?: string;
+    };
+  };
+  opacity?: {
+    disabled?: string;
+    hover?: string;
+  };
   button?: {
-    padding?: string;
-    fontSize?: string;
-    borderRadius?: string;
+    "border-radius"?: string;
+    "font-family"?: string;
+    "font-weight"?: string;
     primary?: {
       background?: string;
+      "background-hover"?: string;
+      "background-active"?: string;
+      text?: string;
+      shadow?: string;
+      "shadow-hover"?: string;
+    };
+    secondary?: {
+      background?: string;
+      "background-hover"?: string;
+      "background-active"?: string;
+      text?: string;
+      shadow?: string;
+      "shadow-hover"?: string;
+    };
+    outline?: {
+      background?: string;
+      "background-hover"?: string;
+      border?: string;
       text?: string;
     };
+    ghost?: {
+      background?: string;
+      "background-hover"?: string;
+      text?: string;
+    };
+    danger?: {
+      background?: string;
+      "background-hover"?: string;
+      text?: string;
+    };
+    size?: {
+      sm?: {
+        padding?: string;
+        "font-size"?: string;
+        height?: string;
+      };
+      md?: {
+        padding?: string;
+        "font-size"?: string;
+        height?: string;
+      };
+      lg?: {
+        padding?: string;
+        "font-size"?: string;
+        height?: string;
+      };
+    };
+  };
+  input?: {
+    "border-radius"?: string;
+    border?: string;
+    "border-hover"?: string;
+    "border-focus"?: string;
+    "border-error"?: string;
+    background?: string;
+    "background-disabled"?: string;
+    text?: string;
+    placeholder?: string;
+    padding?: string;
+    "font-size"?: string;
+    transition?: string;
+    "shadow-focus"?: string;
+  };
+  card?: {
+    background?: string;
+    "border-radius"?: string;
+    padding?: string;
+    shadow?: string;
+    "shadow-hover"?: string;
+    border?: string;
+    transition?: string;
   };
   [key: string]: any;
 }

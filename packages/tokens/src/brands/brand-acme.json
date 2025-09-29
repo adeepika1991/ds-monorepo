@@ -1,6 +1,10 @@
 {
   "color": {
-    "primary": { "value": "#1E90FF" },
-    "secondary": { "value": "#FFD700" }
+    "primary": { "value": "#2563EB" },
+    "primary-hover": { "value": "#1D4ED8" },
+    "primary-active": { "value": "#1E40AF" },
+    "secondary": { "value": "#F59E0B" },
+    "secondary-hover": { "value": "#D97706" },
+    "secondary-active": { "value": "#B45309" }
   }
 }

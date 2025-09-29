@@ -1,11 +1,56 @@
 {
   "button": {
-    "padding": { "value": "{size.spacing.md}" },
-    "fontSize": { "value": "{size.font.md}" },
-    "borderRadius": { "value": "4px" },
+    "border-radius": { "value": "{size.border-radius.md}" },
+    "font-family": { "value": "'Inter', sans-serif" },
+    "font-weight": { "value": "600" },
     "primary": {
       "background": { "value": "{color.primary}" },
-      "text": { "value": "{color.text}" }
+      "background-hover": { "value": "{color.primary-hover}" },
+      "background-active": { "value": "{color.primary-active}" },
+      "text": { "value": "#FFFFFF" },
+      "shadow": { "value": "{shadow.sm}" },
+      "shadow-hover": { "value": "{shadow.md}" }
+    },
+    "secondary": {
+      "background": { "value": "{color.secondary}" },
+      "background-hover": { "value": "{color.secondary-hover}" },
+      "background-active": { "value": "{color.secondary-active}" },
+      "text": { "value": "#FFFFFF" },
+      "shadow": { "value": "{shadow.sm}" },
+      "shadow-hover": { "value": "{shadow.md}" }
+    },
+    "outline": {
+      "background": { "value": "transparent" },
+      "background-hover": { "value": "{color.primary}10" },
+      "border": { "value": "{color.primary}" },
+      "text": { "value": "{color.primary}" }
+    },
+    "ghost": {
+      "background": { "value": "transparent" },
+      "background-hover": { "value": "{color.primary}10" },
+      "text": { "value": "{color.primary}" }
+    },
+    "danger": {
+      "background": { "value": "{color.error}" },
+      "background-hover": { "value": "#DC2626" },
+      "text": { "value": "#FFFFFF" }
+    },
+    "size": {
+      "sm": {
+        "padding": { "value": "{size.spacing.sm} {size.spacing.md}" },
+        "font-size": { "value": "{size.font.sm}" },
+        "height": { "value": "32px" }
+      },
+      "md": {
+        "padding": { "value": "{size.spacing.md} {size.spacing.lg}" },
+        "font-size": { "value": "{size.font.md}" },
+        "height": { "value": "40px" }
+      },
+      "lg": {
+        "padding": { "value": "{size.spacing.lg} {size.spacing.xl}" },
+        "font-size": { "value": "{size.font.lg}" },
+        "height": { "value": "48px" }
+      }
     }
   }
 }

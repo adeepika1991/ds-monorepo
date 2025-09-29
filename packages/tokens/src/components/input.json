@@ -1,0 +1,19 @@
+{
+  "input": {
+    "border-radius": { "value": "{size.border-radius.md}" },
+    "border": { "value": "1px solid {color.border}" },
+    "border-hover": { "value": "1px solid {color.border-hover}" },
+    "border-focus": { "value": "2px solid {color.primary}" },
+    "border-error": { "value": "2px solid {color.error}" },
+    "background": { "value": "{color.background}" },
+    "background-disabled": { "value": "{color.surface}" },
+    "text": { "value": "{color.text}" },
+    "placeholder": { "value": "{color.text-muted}" },
+    "padding": { "value": "{size.spacing.md} {size.spacing.lg}" },
+    "font-size": { "value": "{size.font.md}" },
+    "transition": {
+      "value": "all {animation.duration.normal} {animation.easing.default}"
+    },
+    "shadow-focus": { "value": "0 0 0 3px {color.primary}20" }
+  }
+}

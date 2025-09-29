@@ -1,0 +1,13 @@
+{
+  "card": {
+    "background": { "value": "{color.background}" },
+    "border-radius": { "value": "{size.border-radius.lg}" },
+    "padding": { "value": "{size.spacing.lg}" },
+    "shadow": { "value": "{shadow.md}" },
+    "shadow-hover": { "value": "{shadow.lg}" },
+    "border": { "value": "1px solid {color.border}" },
+    "transition": {
+      "value": "all {animation.duration.normal} {animation.easing.default}"
+    }
+  }
+}

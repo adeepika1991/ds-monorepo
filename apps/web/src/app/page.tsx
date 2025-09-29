@@ -14,7 +14,6 @@ const LoginDemo = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { theme, brand, setTheme, setBrand, tokens } = useTheme();
-  console.log(tokens);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
