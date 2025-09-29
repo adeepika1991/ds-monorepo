@@ -27,7 +27,7 @@ jobs:
         run: pnpm install
 
       # 5️⃣ Build tokens first
-      - name: Build design-system
+      - name: Build tokens
         run: pnpm --filter @repo/tokens run build
 
       # 6️⃣ Build design-system second
