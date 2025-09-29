@@ -7,19 +7,38 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout the repo
       - uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
 
+      # 3️⃣ Setup pnpm
       - uses: pnpm/action-setup@v2
+        with:
+          version: 10
 
-      - run: pnpm install --filter web...
-      - run: pnpm build
-        working-directory: apps/web
+      # 4️⃣ Install all dependencies (including devDeps)
+      - name: Install dependencies
+        run: pnpm install
 
+      # 5️⃣ Build tokens first
+      - name: Build design-system
+        run: pnpm --filter @repo/tokens run build
+
+      # 6️⃣ Build design-system second
+      - name: Build design-system
+        run: pnpm --filter @repo/design-system run build
+
+      # 6️⃣ Build web app
+      - name: Build web app
+        run: pnpm --filter web run build
+
+      # 7️⃣ Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
