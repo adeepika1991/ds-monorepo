@@ -1,0 +1,11 @@
+{
+  "projects": [
+    {
+      "name": "web",
+      "rootDirectory": "apps/web"
+    }
+  ],
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter web run build",
+  "outputDirectory": ".next"
+}
