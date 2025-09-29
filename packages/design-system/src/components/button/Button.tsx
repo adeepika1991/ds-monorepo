@@ -1,4 +1,6 @@
 // packages/design-system/src/components/button/Button.tsx
+"use client";
+
 import React from "react";
 import { useTheme } from "../../providers";
 import { clsx } from "clsx";

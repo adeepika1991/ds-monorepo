@@ -1,4 +1,6 @@
 // packages/design-system/src/components/Input/Input.tsx
+"use client";
+
 import React, { useState, useId } from "react";
 import { useTheme } from "../../providers";
 import { clsx } from "clsx";

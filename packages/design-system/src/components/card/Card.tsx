@@ -1,4 +1,6 @@
 // packages/design-system/src/components/Card/Card.tsx
+"use client";
+
 import React, { useState } from "react";
 import { useTheme } from "../../providers";
 import { clsx } from "clsx";
