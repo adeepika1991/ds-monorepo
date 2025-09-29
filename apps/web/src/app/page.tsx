@@ -19,8 +19,6 @@ const ComponentGallery = () => {
   });
   const { theme, brand, setTheme, setBrand, tokens } = useTheme();
 
-  console.log(tokens);
-
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };

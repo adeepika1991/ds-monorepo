@@ -23,7 +23,7 @@
     "start": "turbo run start --parallel",
     "test": "turbo run test",
     "type-check": "turbo run type-check",
-    "storybook": "turbo run storybook"
+    "storybook": "pnpm --filter @repo/design-system run storybook"
   },
   "dependencies": {
     "react-native-web": "~0.21.1",
