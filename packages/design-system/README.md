@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# Design System Package
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This package is the **core of our cross-platform Design System**, providing reusable UI components, theme support, and integration with design tokens.
 
-Currently, two official plugins are available:
+It is built with **TypeScript** and can be consumed by both **web (React/Next.js)** and **mobile (React Native)** apps.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Overview
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+The **Design System Package** is your go-to library for:
 
-## Expanding the ESLint configuration
+- Building consistent, reusable UI components
+- Accessing **predefined design tokens** for colors, spacing, typography, and themes
+- Experimenting with **component variants** in isolation using Storybook
+- Ensuring **type-safe usage** across apps
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Whether you’re developing a new feature in a web app or a React Native mobile app, this package provides all the foundational components you need.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Reusable UI Components**  
+  Examples include `Button`, `Input`, `Card`, and more.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Storybook Playground**  
+  View all components with props controls, theme switching, and brand variations.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Design Tokens Integration**  
+  Automatically picks up base, brand, and theme tokens from the `tokens` package.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **TypeScript Support**  
+  Full type safety for props, variants, and themes.
+
+- **Cross-Platform Ready**  
+  Components are designed to work on web and mobile (React Native) with minimal adjustments.
+
+- **Theming & Branding**  
+  Supports light/dark modes and multiple brand themes for quick prototyping and product alignment.

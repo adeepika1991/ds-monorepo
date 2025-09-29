@@ -17,5 +17,5 @@ This web application serves as:
 - 🏢 Brand switching (Acme/Globex)
 - 📱 Responsive design
 - ♿ Accessibility compliant
-- 🚀 Next.js 14 with App Router
+- 🚀 Next.js 15+ with App Router
 - ⚡ Fast refresh development
