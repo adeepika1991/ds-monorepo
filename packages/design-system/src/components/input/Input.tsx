@@ -9,6 +9,7 @@ export interface InputProps
   error?: string;
   success?: boolean;
   helperText?: string;
+  variant?: "default" | "filled" | "outline" | "glass";
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -16,6 +17,7 @@ export const Input: React.FC<InputProps> = ({
   error,
   success,
   helperText,
+  variant = "default",
   className,
   onFocus,
   onBlur,
@@ -35,80 +37,265 @@ export const Input: React.FC<InputProps> = ({
     onBlur?.(e);
   };
 
-  const getInputStyles = (): React.CSSProperties => {
-    let border = tokens.input?.border || "1px solid #E2E8F0";
-    let boxShadow = "none";
+  // Helper function to get token value with fallback
+  const getToken = (path: string, fallback: string = "") => {
+    const parts = path.split(".");
+    let current: any = tokens;
 
+    for (const part of parts) {
+      if (current && typeof current === "object" && part in current) {
+        current = current[part];
+      } else {
+        return fallback;
+      }
+    }
+
+    if (current && typeof current === "object" && "value" in current) {
+      return current.value;
+    }
+
+    return current || fallback;
+  };
+
+  const getInputStyles = (): React.CSSProperties => {
+    // Get base styles
+    let border = getToken(
+      "input.border",
+      `${getToken("size.border-width.thin", "1px")} solid ${getToken(
+        "color.border",
+        "#E5E7EB"
+      )}`
+    );
+    let boxShadow = getToken(
+      "input.shadow",
+      getToken("shadow.inner", "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)")
+    );
+    let background = getToken(
+      "input.background",
+      getToken("color.background", "#FFFFFF")
+    );
+    let color = getToken("input.text", getToken("color.text", "#1A1F36"));
+
+    // Handle variants
+    if (variant === "filled") {
+      background = getToken(
+        "input.variant.filled.background",
+        getToken("color.surface", "#F8FAFC")
+      );
+      border = getToken(
+        "input.variant.filled.border",
+        `${getToken("size.border-width.thin", "1px")} solid transparent`
+      );
+    } else if (variant === "outline") {
+      background = getToken("input.variant.outline.background", "transparent");
+      border = getToken(
+        "input.variant.outline.border",
+        `${getToken("size.border-width.thin", "1px")} solid ${getToken(
+          "color.border",
+          "#E5E7EB"
+        )}`
+      );
+    } else if (variant === "glass") {
+      background = getToken(
+        "input.variant.glass.background",
+        getToken(
+          "gradient.glass",
+          "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)"
+        )
+      );
+      border = getToken(
+        "input.variant.glass.border",
+        "1px solid rgba(255,255,255,0.2)"
+      );
+      color = getToken(
+        "input.variant.glass.text",
+        getToken("color.text-inverse", "#FFFFFF")
+      );
+    }
+
+    // Handle states
     if (error) {
-      border = tokens.input?.["border-error"] || "2px solid #EF4444";
+      border = getToken(
+        "input.border-error",
+        `${getToken("size.border-width.medium", "2px")} solid ${getToken(
+          "color.error",
+          "#EF4444"
+        )}`
+      );
+      boxShadow = getToken(
+        "input.state.error.shadow",
+        `0 0 0 3px ${getToken("color.error", "#EF4444")}20`
+      );
     } else if (isFocused) {
-      border = tokens.input?.["border-focus"] || "2px solid #3B82F6";
-      boxShadow = tokens.input?.["shadow-focus"] || "0 0 0 3px #3B82F620";
+      border = getToken(
+        "input.border-focus",
+        `${getToken("size.border-width.medium", "2px")} solid ${getToken(
+          "color.border-focused",
+          "#0066FF"
+        )}`
+      );
+      boxShadow = getToken(
+        "input.shadow-focus",
+        getToken("shadow.glow-primary", "0 0 20px rgba(0, 102, 255, 0.3)")
+      );
     } else if (success) {
-      border = "2px solid #10B981";
+      border = getToken(
+        "input.state.success.border",
+        `${getToken("size.border-width.medium", "2px")} solid ${getToken(
+          "color.success",
+          "#10B981"
+        )}`
+      );
+      boxShadow = getToken(
+        "input.state.success.shadow",
+        `0 0 0 3px ${getToken("color.success", "#10B981")}20`
+      );
+    }
+
+    // Handle disabled state
+    if (props.disabled) {
+      background = getToken(
+        "input.background-disabled",
+        getToken("color.surface", "#F8FAFC")
+      );
     }
 
     return {
       width: "100%",
-      padding: tokens.input?.padding || "12px 16px",
-      fontSize: tokens.input?.["font-size"] || "16px",
-      borderRadius: tokens.input?.["border-radius"] || "8px",
+      padding: getToken(
+        "input.padding",
+        `${getToken("size.spacing.md", "1rem")} ${getToken(
+          "size.spacing.lg",
+          "1.5rem"
+        )}`
+      ),
+      fontSize: getToken("input.font-size", getToken("font.size.base", "1rem")),
+      borderRadius: getToken(
+        "input.border-radius",
+        getToken("size.border-radius.md", "0.5rem")
+      ),
       border,
       boxShadow,
-      backgroundColor: props.disabled
-        ? tokens.input?.["background-disabled"] || "#F8FAFC"
-        : tokens.input?.background || "#FFFFFF",
-      color: tokens.input?.text || "#1E293B",
-      transition: tokens.input?.transition || "all 300ms ease",
-      fontFamily: "'Inter', sans-serif",
+      backgroundColor: background,
+      color,
+      transition: getToken(
+        "input.transition",
+        `all ${getToken("animation.duration.normal", "300ms")} ${getToken(
+          "animation.easing.default",
+          "cubic-bezier(0.4, 0, 0.2, 1)"
+        )}`
+      ),
+      fontFamily: getToken(
+        "input.font-family",
+        getToken("font.family.sans", "'Inter', sans-serif")
+      ),
+      fontWeight: getToken(
+        "input.font-weight",
+        getToken("font.weight.normal", "400")
+      ),
+      lineHeight: getToken(
+        "input.line-height",
+        getToken("font.line-height.normal", "1.5")
+      ),
+      backdropFilter:
+        variant === "glass"
+          ? getToken(
+              "input.variant.glass.backdrop-filter",
+              `blur(${getToken("blur.md", "8px")})`
+            )
+          : undefined,
+      opacity: props.disabled
+        ? getToken(
+            "input.state.disabled.opacity",
+            getToken("opacity.disabled", "0.5")
+          )
+        : "1",
+      cursor: props.disabled
+        ? getToken("input.state.disabled.cursor", "not-allowed")
+        : "text",
       ...style,
     };
   };
 
   const labelStyles: React.CSSProperties = {
-    color: tokens.color?.text || "#1E293B",
-    marginBottom: tokens.size?.spacing?.sm || "8px",
+    color: getToken("color.text", "#1A1F36"),
+    marginBottom: getToken("size.spacing.sm", "0.75rem"),
     display: "block",
-    fontSize: tokens.size?.font?.sm || "14px",
-    fontWeight: "500",
+    fontSize: getToken("font.size.sm", "0.875rem"),
+    fontWeight: getToken("font.weight.medium", "500"),
+    fontFamily: getToken("font.family.sans", "'Inter', sans-serif"),
   };
 
   const helperTextStyles: React.CSSProperties = {
     color: error
-      ? tokens.color?.error || "#EF4444"
+      ? getToken("color.error", "#EF4444")
       : success
-      ? tokens.color?.success || "#10B981"
-      : tokens.color?.["text-muted"] || "#64748B",
-    fontSize: tokens.size?.font?.sm || "12px",
-    marginTop: tokens.size?.spacing?.xs || "4px",
+      ? getToken("color.success", "#10B981")
+      : getToken("color.text-muted", "#6B7280"),
+    fontSize: getToken("font.size.sm", "0.875rem"),
+    marginTop: getToken("size.spacing.xs", "0.5rem"),
     display: "block",
+    fontFamily: getToken("font.family.sans", "'Inter', sans-serif"),
   };
 
   return (
     <div
       className="ds-input-wrapper"
-      style={{ marginBottom: tokens.size?.spacing?.md || "16px" }}
+      style={{ marginBottom: getToken("size.spacing.md", "1rem") }}
     >
       {label && (
-        <label className="ds-input-label" style={labelStyles}>
+        <label
+          htmlFor={props.id} // Ensure label is associated with input
+          className="ds-input-label"
+          style={labelStyles}
+        >
           {label}
+          {props.required && (
+            <span aria-hidden="true" className="ds-input-required">
+              {" "}
+              *
+            </span>
+          )}
         </label>
       )}
+
       <input
+        id={props.id} // Ensure ID exists for label association
         className={clsx(
           "ds-input",
+          `ds-input--${variant}`,
           error && "ds-input--error",
           success && "ds-input--success",
           isFocused && "ds-input--focused",
+          props.disabled && "ds-input--disabled",
           className
         )}
         style={getInputStyles()}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        aria-invalid={error ? "true" : "false"}
+        aria-describedby={
+          [error && `${props.id}-error`, helperText && `${props.id}-helper`]
+            .filter(Boolean)
+            .join(" ") || undefined
+        }
+        aria-required={props.required}
+        disabled={props.disabled}
         {...props}
       />
+
       {(error || helperText) && (
-        <span className="ds-helper-text" style={helperTextStyles}>
+        <span
+          id={error ? `${props.id}-error` : `${props.id}-helper`}
+          className={clsx(
+            "ds-helper-text",
+            error && "ds-helper-text--error",
+            success && "ds-helper-text--success"
+          )}
+          style={helperTextStyles}
+          role={error ? "alert" : "status"}
+          aria-live={error ? "assertive" : "polite"}
+        >
           {error || helperText}
         </span>
       )}

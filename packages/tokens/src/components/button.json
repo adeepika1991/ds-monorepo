@@ -1,55 +1,90 @@
 {
   "button": {
     "border-radius": { "value": "{size.border-radius.md}" },
-    "font-family": { "value": "'Inter', sans-serif" },
-    "font-weight": { "value": "600" },
+    "font-family": { "value": "{font.family.sans}" },
+    "font-weight": { "value": "{font.weight.semibold}" },
+
     "primary": {
       "background": { "value": "{color.primary}" },
       "background-hover": { "value": "{color.primary-hover}" },
       "background-active": { "value": "{color.primary-active}" },
-      "text": { "value": "#FFFFFF" },
+      "text": { "value": "{color.text-inverse}" },
       "shadow": { "value": "{shadow.sm}" },
-      "shadow-hover": { "value": "{shadow.md}" }
+      "shadow-hover": { "value": "{shadow.md}" },
+      "border": { "value": "none" }
     },
+
     "secondary": {
       "background": { "value": "{color.secondary}" },
       "background-hover": { "value": "{color.secondary-hover}" },
       "background-active": { "value": "{color.secondary-active}" },
-      "text": { "value": "#FFFFFF" },
+      "text": { "value": "{color.text-inverse}" },
       "shadow": { "value": "{shadow.sm}" },
-      "shadow-hover": { "value": "{shadow.md}" }
+      "shadow-hover": { "value": "{shadow.md}" },
+      "border": { "value": "none" }
     },
+
     "outline": {
       "background": { "value": "transparent" },
       "background-hover": { "value": "{color.primary}10" },
-      "border": { "value": "{color.primary}" },
-      "text": { "value": "{color.primary}" }
+      "border": { "value": "2px solid {color.primary}" },
+      "border-hover": { "value": "2px solid {color.primary-hover}" },
+      "text": { "value": "{color.primary}" },
+      "text-hover": { "value": "{color.primary-hover}" }
     },
+
     "ghost": {
       "background": { "value": "transparent" },
       "background-hover": { "value": "{color.primary}10" },
-      "text": { "value": "{color.primary}" }
+      "text": { "value": "{color.primary}" },
+      "text-hover": { "value": "{color.primary-hover}" },
+      "border": { "value": "none" }
     },
+
+    "glass": {
+      "background": { "value": "{gradient.glass}" },
+      "background-hover": { "value": "{gradient.glass}" },
+      "border": { "value": "1px solid rgba(255,255,255,0.2)" },
+      "text": { "value": "{color.text-inverse}" },
+      "backdrop-filter": { "value": "blur({blur.md})" }
+    },
+
     "danger": {
       "background": { "value": "{color.error}" },
       "background-hover": { "value": "#DC2626" },
-      "text": { "value": "#FFFFFF" }
+      "text": { "value": "{color.text-inverse}" },
+      "shadow": { "value": "0 0 0 3px {color.error}33" }
     },
+
     "size": {
       "sm": {
-        "padding": { "value": "{size.spacing.sm} {size.spacing.md}" },
-        "font-size": { "value": "{size.font.sm}" },
-        "height": { "value": "32px" }
+        "padding": { "value": "{size.spacing.xs} {size.spacing.md}" },
+        "font-size": { "value": "{font.size.sm}" },
+        "height": { "value": "2rem" },
+        "min-width": { "value": "5rem" }
       },
       "md": {
-        "padding": { "value": "{size.spacing.md} {size.spacing.lg}" },
-        "font-size": { "value": "{size.font.md}" },
-        "height": { "value": "40px" }
+        "padding": { "value": "{size.spacing.sm} {size.spacing.lg}" },
+        "font-size": { "value": "{font.size.base}" },
+        "height": { "value": "2.5rem" },
+        "min-width": { "value": "6rem" }
       },
       "lg": {
-        "padding": { "value": "{size.spacing.lg} {size.spacing.xl}" },
-        "font-size": { "value": "{size.font.lg}" },
-        "height": { "value": "48px" }
+        "padding": { "value": "{size.spacing.md} {size.spacing.xl}" },
+        "font-size": { "value": "{font.size.lg}" },
+        "height": { "value": "3rem" },
+        "min-width": { "value": "7rem" }
+      }
+    },
+
+    "state": {
+      "loading": {
+        "opacity": { "value": "{opacity.50}" },
+        "cursor": { "value": "not-allowed" }
+      },
+      "disabled": {
+        "opacity": { "value": "{opacity.disabled}" },
+        "cursor": { "value": "not-allowed" }
       }
     }
   }

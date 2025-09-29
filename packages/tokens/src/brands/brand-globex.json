@@ -1,12 +1,12 @@
 {
   "color": {
-    "primary": { "value": "#DC2626" },
+    "primary": { "value": "#E879A1" },
     "primary-hover": { "value": "#B91C1C" },
     "primary-active": { "value": "#991B1B" },
     "secondary": { "value": "#059669" },
     "secondary-hover": { "value": "#047857" },
     "secondary-active": { "value": "#065F46" },
-    "accent": { "value": "#7C3AED" }
+    "accent": { "value": "#B19CD9" }
   },
   "gradient": {
     "primary": {

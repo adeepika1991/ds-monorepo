@@ -5,7 +5,8 @@ import * as themes from "@repo/tokens";
 type Theme = "light" | "dark";
 type Brand = "acme" | "globex";
 
-export interface DesignTokens {
+// Core token structure that we know will always exist
+export interface CoreDesignTokens {
   color?: {
     primary?: string;
     "primary-hover"?: string;
@@ -17,6 +18,7 @@ export interface DesignTokens {
     surface?: string;
     text?: string;
     "text-muted"?: string;
+    "text-inverse"?: string;
     border?: string;
     "border-hover"?: string;
     error?: string;
@@ -24,13 +26,6 @@ export interface DesignTokens {
     success?: string;
   };
   size?: {
-    font?: {
-      xs?: string;
-      sm?: string;
-      md?: string;
-      lg?: string;
-      xl?: string;
-    };
     spacing?: {
       xs?: string;
       sm?: string;
@@ -47,107 +42,18 @@ export interface DesignTokens {
       full?: string;
     };
   };
-  shadow?: {
-    sm?: string;
-    md?: string;
-    lg?: string;
-    xl?: string;
-  };
-  animation?: {
-    duration?: {
-      fast?: string;
-      normal?: string;
-      slow?: string;
-    };
-    easing?: {
-      default?: string;
-      bounce?: string;
-    };
-  };
-  opacity?: {
-    disabled?: string;
-    hover?: string;
-  };
-  button?: {
-    "border-radius"?: string;
-    "font-family"?: string;
-    "font-weight"?: string;
-    primary?: {
-      background?: string;
-      "background-hover"?: string;
-      "background-active"?: string;
-      text?: string;
-      shadow?: string;
-      "shadow-hover"?: string;
-    };
-    secondary?: {
-      background?: string;
-      "background-hover"?: string;
-      "background-active"?: string;
-      text?: string;
-      shadow?: string;
-      "shadow-hover"?: string;
-    };
-    outline?: {
-      background?: string;
-      "background-hover"?: string;
-      border?: string;
-      text?: string;
-    };
-    ghost?: {
-      background?: string;
-      "background-hover"?: string;
-      text?: string;
-    };
-    danger?: {
-      background?: string;
-      "background-hover"?: string;
-      text?: string;
-    };
-    size?: {
-      sm?: {
-        padding?: string;
-        "font-size"?: string;
-        height?: string;
-      };
-      md?: {
-        padding?: string;
-        "font-size"?: string;
-        height?: string;
-      };
-      lg?: {
-        padding?: string;
-        "font-size"?: string;
-        height?: string;
-      };
-    };
-  };
-  input?: {
-    "border-radius"?: string;
-    border?: string;
-    "border-hover"?: string;
-    "border-focus"?: string;
-    "border-error"?: string;
-    background?: string;
-    "background-disabled"?: string;
-    text?: string;
-    placeholder?: string;
-    padding?: string;
-    "font-size"?: string;
-    transition?: string;
-    "shadow-focus"?: string;
-  };
-  card?: {
-    background?: string;
-    "border-radius"?: string;
-    padding?: string;
-    shadow?: string;
-    "shadow-hover"?: string;
-    border?: string;
-    transition?: string;
-  };
-  [key: string]: any;
+  // Add other core tokens that are always present
 }
+
+// Generic DesignTokens that extends core and allows any additional properties
+export type DesignTokens = CoreDesignTokens & {
+  [key: string]: any; // This allows any additional token categories
+};
+
+// Utility type for deep partial (all properties optional at any level)
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
 
 interface ThemeContextType {
   theme: Theme;
@@ -155,41 +61,61 @@ interface ThemeContextType {
   setTheme: (theme: Theme) => void;
   setBrand: (brand: Brand) => void;
   tokens: DesignTokens;
+  overrideTokens: (overrides: DeepPartial<DesignTokens>) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Simple token getter - no transformation needed!
-// In your ThemeContext, add this debug:
-const getTokens = (brand: Brand, theme: Theme): DesignTokens => {
-  const themeKey = `${brand}${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
+// Deep merge utility with proper typing
+const deepMerge = <T extends Record<string, any>>(
+  target: T,
+  source: DeepPartial<T>
+): T => {
+  const result = { ...target };
 
-  console.log("=== TOKEN DEBUG ===");
-  console.log("Theme key:", themeKey);
-  console.log("Available themes:", Object.keys(themes));
-  console.log("Themes object:", themes);
+  for (const key in source) {
+    if (
+      source[key] &&
+      typeof source[key] === "object" &&
+      !Array.isArray(source[key])
+    ) {
+      result[key] = deepMerge(result[key] || ({} as any), source[key] as any);
+    } else {
+      result[key] = source[key] as any;
+    }
+  }
 
-  const themeTokens = (themes as any)[themeKey] || {};
-
-  console.log("Found tokens:", themeTokens);
-  console.log("Token keys:", Object.keys(themeTokens));
-  console.log("=== END DEBUG ===");
-
-  return themeTokens;
+  return result;
 };
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+export const ThemeProvider: React.FC<{
+  children: React.ReactNode;
+  initialTheme?: Theme;
+  initialBrand?: Brand;
+  tokenOverrides?: DeepPartial<DesignTokens>;
+}> = ({
   children,
+  initialTheme = "light",
+  initialBrand = "acme",
+  tokenOverrides = {},
 }) => {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [brand, setBrand] = useState<Brand>("acme");
-  const [tokens, setTokens] = useState<DesignTokens>(getTokens(brand, theme));
+  const [theme, setTheme] = useState<Theme>(initialTheme);
+  const [brand, setBrand] = useState<Brand>(initialBrand);
+  const [customOverrides, setCustomOverrides] =
+    useState<DeepPartial<DesignTokens>>(tokenOverrides);
 
-  useEffect(() => {
-    console.log(`🔄 Theme/Brand changed to: ${brand}-${theme}`);
-    const newTokens = getTokens(brand, theme);
-    setTokens(newTokens);
-  }, [theme, brand]);
+  const getBaseTokens = (): DesignTokens => {
+    const themeKey = `${brand}${
+      theme.charAt(0).toUpperCase() + theme.slice(1)
+    }`;
+    return (themes as any)[themeKey] || {};
+  };
+
+  const tokens = deepMerge(getBaseTokens(), customOverrides);
+
+  const overrideTokens = (overrides: DeepPartial<DesignTokens>) => {
+    setCustomOverrides((prev) => deepMerge(prev, overrides));
+  };
 
   const value: ThemeContextType = {
     theme,
@@ -197,6 +123,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     setTheme,
     setBrand,
     tokens,
+    overrideTokens,
   };
 
   return (

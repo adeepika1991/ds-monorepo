@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "glass";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
   loading?: boolean;
@@ -34,96 +34,99 @@ export const Button: React.FC<ButtonProps> = ({
     transition: `all ${tokens.animation?.duration?.normal || "300ms"} ${
       tokens.animation?.easing?.default || "ease"
     }`,
-    fontFamily: tokens.button?.["font-family"] || "'Inter', sans-serif",
-    fontWeight: tokens.button?.["font-weight"] || "600",
+    fontFamily:
+      tokens.button?.["font-family"] ||
+      tokens.font?.family?.sans ||
+      "'Inter', sans-serif",
+    fontWeight:
+      tokens.button?.["font-weight"] || tokens.font?.weight?.semibold || "600",
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: tokens.size?.spacing?.sm || "8px",
-    borderRadius: tokens.button?.["border-radius"] || "8px",
-    lineHeight: 1,
+    gap: tokens.size?.spacing?.sm || "0.75rem",
+    borderRadius:
+      tokens.button?.["border-radius"] ||
+      tokens.size?.["border-radius"]?.md ||
+      "0.5rem",
+    lineHeight: tokens.font?.["line-height"]?.normal || "1.5",
     position: "relative",
     overflow: "hidden",
     transform: "translateY(0)",
-    opacity: disabled ? tokens.opacity?.disabled || 0.5 : 1,
+    opacity: disabled
+      ? tokens.button?.state?.disabled?.opacity ||
+        tokens.opacity?.disabled ||
+        "0.5"
+      : "1",
   };
 
   const sizeStyles = {
     sm: {
-      padding: tokens.button?.size?.sm?.padding || "8px 12px",
-      fontSize: tokens.button?.size?.sm?.["font-size"] || "14px",
-      minHeight: tokens.button?.size?.sm?.height || "32px",
+      padding:
+        tokens.button?.size?.sm?.padding ||
+        `${tokens.size?.spacing?.xs} ${tokens.size?.spacing?.md}`,
+      fontSize: tokens.button?.size?.sm?.["font-size"] || tokens.font?.size?.sm,
+      minHeight: tokens.button?.size?.sm?.height || "2rem",
     },
     md: {
-      padding: tokens.button?.size?.md?.padding || "12px 16px",
-      fontSize: tokens.button?.size?.md?.["font-size"] || "16px",
-      minHeight: tokens.button?.size?.md?.height || "40px",
+      padding:
+        tokens.button?.size?.md?.padding ||
+        `${tokens.size?.spacing?.sm} ${tokens.size?.spacing?.lg}`,
+      fontSize:
+        tokens.button?.size?.md?.["font-size"] || tokens.font?.size?.base,
+      minHeight: tokens.button?.size?.md?.height || "2.5rem",
     },
     lg: {
-      padding: tokens.button?.size?.lg?.padding || "16px 24px",
-      fontSize: tokens.button?.size?.lg?.["font-size"] || "18px",
-      minHeight: tokens.button?.size?.lg?.height || "48px",
+      padding:
+        tokens.button?.size?.lg?.padding ||
+        `${tokens.size?.spacing?.md} ${tokens.size?.spacing?.xl}`,
+      fontSize: tokens.button?.size?.lg?.["font-size"] || tokens.font?.size?.lg,
+      minHeight: tokens.button?.size?.lg?.height || "3rem",
     },
   };
 
   const variantStyles = {
     primary: {
-      backgroundColor: tokens.button?.primary?.background || "#3B82F6",
-      color: tokens.button?.primary?.text || "#FFFFFF",
-      boxShadow: tokens.button?.primary?.shadow || "none",
-      "&:hover:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.primary?.["background-hover"] || "#2563EB",
-        boxShadow: tokens.button?.primary?.["shadow-hover"] || "none",
-        transform: "translateY(-1px)",
-      },
-      "&:active:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.primary?.["background-active"] || "#1D4ED8",
-        transform: "translateY(0)",
-      },
+      background:
+        tokens.button?.primary?.background ||
+        tokens.gradient?.primary ||
+        tokens.color?.primary,
+      color: tokens.button?.primary?.text || tokens.color?.["text-inverse"],
+      boxShadow: tokens.button?.primary?.shadow || tokens.shadow?.sm,
+      border: tokens.button?.primary?.border || "none",
     },
     secondary: {
-      backgroundColor: tokens.button?.secondary?.background || "#F59E0B",
-      color: tokens.button?.secondary?.text || "#FFFFFF",
-      boxShadow: tokens.button?.secondary?.shadow || "none",
-      "&:hover:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.secondary?.["background-hover"] || "#D97706",
-        boxShadow: tokens.button?.secondary?.["shadow-hover"] || "none",
-        transform: "translateY(-1px)",
-      },
-      "&:active:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.secondary?.["background-active"] || "#B45309",
-        transform: "translateY(0)",
-      },
+      background:
+        tokens.button?.secondary?.background ||
+        tokens.gradient?.secondary ||
+        tokens.color?.secondary,
+      color: tokens.button?.secondary?.text || tokens.color?.["text-inverse"],
+      boxShadow: tokens.button?.secondary?.shadow || tokens.shadow?.sm,
+      border: tokens.button?.secondary?.border || "none",
     },
     outline: {
-      backgroundColor: tokens.button?.outline?.background || "transparent",
-      color: tokens.button?.outline?.text || "#3B82F6",
-      border: `2px solid ${tokens.button?.outline?.border || "#3B82F6"}`,
-      "&:hover:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.outline?.["background-hover"] || "#3B82F610",
-        transform: "translateY(-1px)",
-      },
+      background: tokens.button?.outline?.background || "transparent",
+      color: tokens.button?.outline?.text || tokens.color?.primary,
+      border:
+        tokens.button?.outline?.border || `2px solid ${tokens.color?.primary}`,
     },
     ghost: {
-      backgroundColor: tokens.button?.ghost?.background || "transparent",
-      color: tokens.button?.ghost?.text || "#3B82F6",
-      "&:hover:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.ghost?.["background-hover"] || "#3B82F610",
-      },
+      background: tokens.button?.ghost?.background || "transparent",
+      color: tokens.button?.ghost?.text || tokens.color?.primary,
+      border: tokens.button?.ghost?.border || "none",
+    },
+    glass: {
+      background: tokens.button?.glass?.background || tokens.gradient?.glass,
+      color: tokens.button?.glass?.text || tokens.color?.["text-inverse"],
+      border: tokens.button?.glass?.border || "1px solid rgba(255,255,255,0.2)",
+      backdropFilter:
+        tokens.button?.glass?.["backdrop-filter"] || `blur(${tokens.blur?.md})`,
     },
     danger: {
-      backgroundColor: tokens.button?.danger?.background || "#EF4444",
-      color: tokens.button?.danger?.text || "#FFFFFF",
-      "&:hover:not(:disabled)": {
-        backgroundColor:
-          tokens.button?.danger?.["background-hover"] || "#DC2626",
-      },
+      background: tokens.button?.danger?.background || tokens.color?.error,
+      color: tokens.button?.danger?.text || tokens.color?.["text-inverse"],
+      boxShadow:
+        tokens.button?.danger?.shadow || `0 0 0 3px ${tokens.color?.error}33`,
+      border: "none",
     },
   };
 
@@ -146,11 +149,31 @@ export const Button: React.FC<ButtonProps> = ({
       )}
       style={combinedStyles}
       disabled={disabled || loading}
+      aria-disabled={disabled || loading}
+      aria-label={loading ? `${children} - Loading` : undefined}
+      aria-live={loading ? "polite" : undefined}
       {...props}
     >
-      {icon && iconPosition === "left" && icon}
-      {loading ? "Loading..." : children}
-      {icon && iconPosition === "right" && icon}
+      {icon && iconPosition === "left" && (
+        <span aria-hidden="true">{icon}</span>
+      )}
+
+      {loading ? (
+        <>
+          <span className="ds-button__loading-text" aria-live="polite">
+            Loading...
+          </span>
+          <span className="ds-button__spinner" aria-hidden="true">
+            {/* Add your loading spinner here */}
+          </span>
+        </>
+      ) : (
+        children
+      )}
+
+      {icon && iconPosition === "right" && (
+        <span aria-hidden="true">{icon}</span>
+      )}
     </button>
   );
 };

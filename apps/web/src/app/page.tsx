@@ -9,6 +9,7 @@ import {
   Input,
   Card,
 } from "@repo/design-system";
+import "@repo/tokens/themes";
 
 const LoginDemo = () => {
   const [email, setEmail] = useState("");

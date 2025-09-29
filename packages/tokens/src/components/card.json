@@ -5,9 +5,69 @@
     "padding": { "value": "{size.spacing.lg}" },
     "shadow": { "value": "{shadow.md}" },
     "shadow-hover": { "value": "{shadow.lg}" },
-    "border": { "value": "1px solid {color.border}" },
+    "border": { "value": "{size.border-width.thin} solid {color.border}" },
     "transition": {
       "value": "all {animation.duration.normal} {animation.easing.default}"
+    },
+
+    "variant": {
+      "elevated": {
+        "background": { "value": "{color.surface-elevated}" },
+        "shadow": { "value": "{shadow.lg}" },
+        "shadow-hover": { "value": "{shadow.xl}" }
+      },
+      "outline": {
+        "background": { "value": "transparent" },
+        "border": {
+          "value": "{size.border-width.medium} solid {color.border}"
+        },
+        "shadow": { "value": "none" },
+        "shadow-hover": { "value": "{shadow.sm}" }
+      },
+      "filled": {
+        "background": { "value": "{color.surface}" },
+        "border": { "value": "none" },
+        "shadow": { "value": "none" }
+      },
+      "glass": {
+        "background": { "value": "{gradient.glass}" },
+        "border": { "value": "1px solid rgba(255,255,255,0.2)" },
+        "backdrop-filter": { "value": "blur({blur.lg})" },
+        "shadow": { "value": "0 8px 32px rgba(0,0,0,0.1)" }
+      },
+      "gradient": {
+        "background": { "value": "{gradient.primary}" },
+        "border": { "value": "none" },
+        "text": { "value": "{color.text-inverse}" }
+      }
+    },
+
+    "size": {
+      "sm": {
+        "padding": { "value": "{size.spacing.md}" },
+        "border-radius": { "value": "{size.border-radius.md}" }
+      },
+      "md": {
+        "padding": { "value": "{size.spacing.lg}" },
+        "border-radius": { "value": "{size.border-radius.lg}" }
+      },
+      "lg": {
+        "padding": { "value": "{size.spacing.xl}" },
+        "border-radius": { "value": "{size.border-radius.xl}" }
+      }
+    },
+
+    "state": {
+      "interactive": {
+        "cursor": { "value": "pointer" },
+        "transition": {
+          "value": "all {animation.duration.normal} {animation.easing.emphasized}"
+        }
+      },
+      "disabled": {
+        "opacity": { "value": "{opacity.disabled}" },
+        "cursor": { "value": "not-allowed" }
+      }
     }
   }
 }
