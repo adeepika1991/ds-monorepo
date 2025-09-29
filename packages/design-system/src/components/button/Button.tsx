@@ -1,4 +1,4 @@
-// packages/design-system/src/components/Button/Button.tsx
+// packages/design-system/src/components/button/Button.tsx
 import React from "react";
 import { useTheme } from "../../providers";
 import { clsx } from "clsx";

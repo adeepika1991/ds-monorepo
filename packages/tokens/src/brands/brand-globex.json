@@ -5,6 +5,36 @@
     "primary-active": { "value": "#991B1B" },
     "secondary": { "value": "#059669" },
     "secondary-hover": { "value": "#047857" },
-    "secondary-active": { "value": "#065F46" }
+    "secondary-active": { "value": "#065F46" },
+    "accent": { "value": "#7C3AED" }
+  },
+  "gradient": {
+    "primary": {
+      "value": "linear-gradient(135deg, {color.primary} 0%, #7C3AED 100%)"
+    },
+    "secondary": {
+      "value": "linear-gradient(135deg, {color.secondary} 0%, #10B981 100%)"
+    }
+  },
+  "size": {
+    "border-radius": {
+      "none": { "value": "0" },
+      "sm": { "value": "0.5rem" },
+      "base": { "value": "0.75rem" },
+      "md": { "value": "1rem" },
+      "lg": { "value": "1.5rem" },
+      "xl": { "value": "2rem" },
+      "2xl": { "value": "3rem" }
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "value": "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif"
+      }
+    }
+  },
+  "shadow": {
+    "glow-primary": { "value": "0 0 30px rgba(220, 38, 38, 0.4)" }
   }
 }
