@@ -360,13 +360,23 @@ const WelcomePage = () => {
           }}
         >
           <Button variant="primary" size="lg">
-            📖 Documentation
+            📖 Design Token Repo
           </Button>
           <Button variant="outline" size="lg">
-            🎨 Design Tokens
+            <a
+              href="/?path=/story/design-tokens-token-display--default"
+              target="_blank"
+            >
+              🎨 Design Tokens in Play
+            </a>
           </Button>
           <Button variant="ghost" size="lg">
-            ⚡ GitHub
+            <a
+              href="https://github.com/adeepika1991/ds-monorepo"
+              target="_blank"
+            >
+              ⚡ GitHub
+            </a>
           </Button>
         </div>
       </Card>
